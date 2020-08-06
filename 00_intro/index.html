@@ -8,11 +8,18 @@
 </head>
 <body>
     <h1 class="green red">Привет Мир!</h1>
-
-
-
-<script type="text/javascript">
-    console.log(document.body)
-</script>
+    <!--Привет мир!-->
+    <div>
+        <div>
+            <div onclick="console.log(this.nextElementSibling)">1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        console.log(document.body.children[1].firstElementChild.children)
+    </script>
 </body>
 </html>
