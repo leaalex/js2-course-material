@@ -30,10 +30,14 @@ button2.onclick = function(){
     this.parentNode.previousElementSibling.value = 'кнопка нажата!'
 }
 
+
+
 const action = () => {
     button.innerText = button.innerText + 'Нажата'
-    button.removeEventListener('click', action)
+    button2.onclick = ''
 }
+
+setTimeout(()=>{ button.removeEventListener('click', action)},3000)
 
 button.addEventListener('click', action)
 
