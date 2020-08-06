@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="green red">Привет Мир!</h1>
+<h1 class="green red">Привет <span>Мир!</span></h1>
     <!--Привет мир!-->
     <div>
         <div>
             <div onclick="console.log(this.nextElementSibling)">1</div>
             <div>2</div>
-            <div>3</div>
+            <div id="div3">3</div>
             <div>4</div>
             <div>5</div>
+            <input type="text" name="User1">
         </div>
     </div>
     <script type="text/javascript">
-        console.log(document.body.children[1].firstElementChild.children)
+        console.log(document.children)
     </script>
 </body>
 </html>
