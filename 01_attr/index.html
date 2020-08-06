@@ -3,26 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1 >Привет <span>Мир!</span></h1>
-    <!--Привет мир!-->
-    <div>
-        <div>
-            <div onclick="console.log(this.nextElementSibling)">1</div>
-            <div>2</div>
-            <div id="div3">3</div>
-            <div>4</div>
-            <div>5</div>
-            <input type="text" name="User1">
-        </div>
-    </div>
-    <script type="text/javascript">
-        document.querySelector('input').value = 'привет мир'
-        document.querySelector('#div3').innerText += ' привет мир'
-        document.querySelector('h1').classList.add('green')
-    </script>
+<h1>Привет Мир!</h1>
+<button class="btn btn-primary" data-y="6"> Кнопка </button>
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
