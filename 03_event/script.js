@@ -1,13 +1,83 @@
-// <div class="input-group mb-3">
-//         <input type="text" class="form-control">
-//                 <div class="input-group-append">
-//                         < class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
-//                 </div>
-//</div>
+function create(tag, props, ...children) {
+    const element = document.createElement(tag)
+    if (props) {
+        if (props.id) element.id = props.id
+        if (props.className) element.className = props.className
+        if (props.classList) element.className = props.classList.join(' ')
+        if (props.attributes) {
+            Object.keys(props.attributes).forEach(item => {
+                element.setAttribute(item, props.attributes[item])
+            })
+        }
+        if (props.properties){
+            Object.keys(props.properties).forEach(item => {
+                element[item] = props.properties[item]
+            })
+        }
+        if (props.style){
+            Object.keys(props.style).forEach(item => {
+                element.style[item] = props.style[item]
+            })
+        }
+        if (props.data){
+            Object.keys(props.data).forEach(item => {
+                element.dataset[item] = props.data[item]
+            })
+        }
+    }
+    if (children) {
+        element.append(...children)
+        // children = children.forEach(
+        //     item => (typeof item === 'string')? element.append(children) : item.outerHTML
+        // )
+
+    }
+
+
+
+
+    // if (props.classList) element.classList.add(props.classList)
+    return element
+}
+
+props = {
+    id: '',
+    className: '',
+    classList: ['',''],
+    attributes: {},
+    properties: {},
+    style: {},
+    data: {},
+}
+
+
+
+
+
+
 const container = document.querySelector('.container')
 
-const div = document.createElement('div')
-div.classList.add('input-group', 'mb-3')
+const div = create(
+    'div',
+    {
+        id: 'id_div_wer3d2232dweds',
+        className: 'input-group mb-8 mt-3',
+        data: {x:1, y:2, z:78},
+        attributes: {type: 'text'},
+        properties: {hidden: false},
+        style: {borderColor: 'gold'}
+    }
+)
+const em = create('button', {style: {color: 'green', display: 'inline-block'}},', этот чертов')
+em.addEventListener('click', function (){ console.log(this) })
+
+const p = create(
+    'p',
+    null,
+    create('em', {style: {color: 'red'}}, 'Привет'),
+    em,
+    'мир!', 'Я Алексей!' )
+// div.classList.add('input-group', 'mb-3')
 
 const input = document.createElement('input')
 input.type = 'text'
@@ -43,8 +113,5 @@ button.addEventListener('click', action)
 
 div.append(input, divBtnContaibner)
 divBtnContaibner.append(button, button2)
-container.appendChild(div)
-
-
-
+container.append(div, p)
 
