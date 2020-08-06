@@ -1,0 +1,14 @@
+h1 {
+    font-family: Consolas
+}
+h1#h1{
+    color: gold;
+}
+h1.green {
+    color: green;
+}
+
+h1.red {
+    color: red;
+}
+
