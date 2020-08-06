@@ -21,9 +21,21 @@ button.classList.add('btn', 'btn-outline-secondary')
 button.type = 'button'
 button.id = 'button-addon2'
 button.innerText = 'Button'
+button.onclick = () => {input.value = ''}
+
 
 const button2 = button.cloneNode(true)
 button2.innerText = 'Button 2'
+button2.onclick = function(){
+    this.parentNode.previousElementSibling.value = 'кнопка нажата!'
+}
+
+const action = () => {
+    button.innerText = button.innerText + 'Нажата'
+    button.removeEventListener('click', action)
+}
+
+button.addEventListener('click', action)
 
 div.append(input, divBtnContaibner)
 divBtnContaibner.append(button, button2)
