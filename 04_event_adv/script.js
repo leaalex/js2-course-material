@@ -2,6 +2,9 @@ function GMLConstructor (enterPoint){
     this.enterPoint = enterPoint
     this.elements = {}
 }
+GMLConstructor.prototype.genID =  function (name = 'id'){
+        return name + '_' + Math.random().toString(36).substr(2, 9);
+}
 
 GMLConstructor.prototype.create = function(tag, props, ...children) {
     const element = document.createElement(tag)
@@ -62,12 +65,21 @@ GML.enterPoint.append(
                     console.log('event', event)
                     console.log('this', this)
                     if (event.key === 'Enter') {
+                        const id = GML.genID()
                         GML.elements['rowContainer'].append(
-                            GML.create('div', {className: 'card m-2', style:{width: 'calc(90%/3)'}},
+                            GML.create('div', {name: id, className: 'card m-2', style:{width: 'calc(90%/3)'}},
                                 GML.create('div', {className: 'card-body'},
                                     GML.create('p', {}, this.value),
                                 ),
-                                GML.create('button', {className: 'btn btn-primary'}, 'Delete')
+                                GML.create('button',
+                                    {
+                                    className: 'btn btn-primary d-none' ,
+                                    events:{
+                                    'click': function (){
+                                        this.parentNode.classList.add('d-none')
+                                        // GML.elements[id].classList.add('d-none')
+                                    }
+                                    }}, 'Delete')
                             ))
                         this.value =''
                     }
@@ -84,7 +96,7 @@ GML.enterPoint.append(
             attributes: {type:'button'},
             events: {
                 'click': function (event){
-                    console.log(this)
+                    console.log(event)
                     GML.enterPoint.append(GML.create('p', {}, GML.elements['input'].value))
                     GML.elements['input'].value =''
                 }
@@ -94,5 +106,20 @@ GML.enterPoint.append(
     ))),
     GML.create('div', {name: 'rowContainer' ,className: 'row'})
 )
+document.body.addEventListener('mouseover', event => {
+        if (event.target.className === 'card m-2'){
+            event.target.lastElementChild.classList.remove('d-none')
+        }
+        if (event.target.className === 'card-body'){
+            event.target.parentNode.lastElementChild.classList.remove('d-none')
+        }
+})
 
-
+document.body.addEventListener('mouseout', event => {
+    if (event.target.className === 'card m-2'){
+        event.target.lastElementChild.classList.add('d-none')
+    }
+    if (event.target.className === 'card-body'){
+        event.target.parentNode.lastElementChild.classList.add('d-none')
+    }
+})
