@@ -1,4 +1,7 @@
-function create(tag, props, ...children) {
+const GML = {
+    enterPoint: null,
+    elements: {},
+    create: function(tag, props, ...children) {
     const element = document.createElement(tag)
     if (props) {
         if (props.id) element.id = props.id
@@ -29,22 +32,25 @@ function create(tag, props, ...children) {
                 element.addEventListener(item, props.events[item])
             })
         }
-        if (props.name) activeElements[props.name] = element
+        if (props.name) this.elements[props.name] = element
     }
     if (children) element.append(...children)
     return element
 }
-const activeElements = {}
-const container = document.querySelector('.container')
+}
 
-container.append(
-    create(
+
+
+GML.enterPoint = document.querySelector('.container')
+
+GML.enterPoint.append(
+    GML.create(
     'div',
     {
         id: 'id_div_wer3d2232dweds',
         className: 'input-group mb-8 mt-3',
     },
-    create(
+        GML.create(
         'input',
         {
             name: 'input',
@@ -55,24 +61,25 @@ container.append(
                     console.log('event', event)
                     console.log('this', this)
                     if (event.key === 'Enter') {
-                        container.append(create('p', {}, this.value))
+                        GML.enterPoint.append(GML.create('p', {}, this.value))
                         this.value =''
                     }
                 }
             }
         }),
-    create('div', {
+        GML.create('div', {
         classList: ['input-group-append']
-    }, create(
+    }, GML.create(
         'button',
         {
             id:'button-addon2',
             classList: ['btn', 'btn-outline-secondary'],
             attributes: {type:'button'},
             events: {
-                'click': (event)=>{
-                    container.append(create('p', {}, activeElements['input'].value))
-                    activeElements['input'].value =''
+                'click': function (event){
+                    console.log(this)
+                    GML.enterPoint.append(GML.create('p', {}, GML.elements['input'].value))
+                    GML.elements['input'].value =''
                 }
             }
         },
