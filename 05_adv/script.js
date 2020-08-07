@@ -132,10 +132,30 @@ window.onload = function () {
     //     GML.elements['rowContainer'].append(...els)
     // };
 
-    fetch('https://jsonplaceholder.typicode.com/todos/')
-        .then(response => response.json())
-        .then(json => {
-            const els = json.map(
+    // fetch('https://jsonplaceholder.typicode.com/todos/')
+    //     .then(response => response.json())
+    //     .then(json => {
+    //         const els = json.map(
+    //             item =>
+    //                 GML.create(
+    //                     'div',
+    //                     {
+    //                         classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
+    //                         style: {width: 'calc(90%/3)'}
+    //                     },
+    //                     GML.create('div', {className: 'card-body'},
+    //                         GML.create('p', {}, item.userId),
+    //                         GML.create('p', {}, item.id),
+    //                         GML.create('p', {}, item.title),
+    //                     ),
+    //                 )
+    //         )
+    //         GML.elements['rowContainer'].append(...els)
+    //     })
+
+    axios('https://jsonplaceholder.typicode.com/todos/')
+        .then(({data}) => {
+            const els = data.map(
                 item =>
                     GML.create(
                         'div',
