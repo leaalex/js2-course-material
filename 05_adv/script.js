@@ -156,20 +156,25 @@ window.onload = function () {
     axios('https://jsonplaceholder.typicode.com/todos/')
         .then(({data}) => {
             const els = data.map(
-                item =>
-                    GML.create(
-                        'div',
-                        {
-                            classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
-                            style: {width: 'calc(90%/3)'}
-                        },
-                        GML.create('div', {className: 'card-body'},
-                            GML.create('p', {}, item.userId),
-                            GML.create('p', {}, item.id),
-                            GML.create('p', {}, item.title),
-                        ),
-                    )
+                item => creatCart(item, 6)
             )
             GML.elements['rowContainer'].append(...els)
         })
+
+    // Создание катрочки ширени W/d
+    function creatCart(item, d) {
+        return GML.create(
+            'div',
+            {
+                classList: ['card', 'm-2', 'text-white', item.completed ? 'bg-primary' : 'bg-danger'],
+                style: {width: `calc(90%/${d})`}
+            },
+            GML.create('div', {className: 'card-body'},
+                GML.create('p', {}, item.userId),
+                GML.create('p', {}, item.id),
+                GML.create('p', {}, item.title),
+            ),
+        )
+    }
+
 }
