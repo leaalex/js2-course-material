@@ -64,7 +64,11 @@ GML.enterPoint.append(
                     if (event.key === 'Enter') {
                         GML.elements['rowContainer'].append(
                             GML.create('div', {className: 'card m-2', style:{width: 'calc(90%/3)'}},
-                                GML.create('div', {className: 'card-body'},this.value)))
+                                GML.create('div', {className: 'card-body'},
+                                    GML.create('p', {}, this.value),
+                                ),
+                                GML.create('button', {className: 'btn btn-primary'}, 'Delete')
+                            ))
                         this.value =''
                     }
                 }
