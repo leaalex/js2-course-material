@@ -108,31 +108,48 @@ window.onload = function () {
     )
 
 
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/');
-    xhr.send();
-    xhr.onload = function () {
-        console.log(JSON.parse(xhr.response));
-        const todosData = JSON.parse(xhr.response)
-        const els = todosData.map(
-            item =>
-                GML.create(
-                    'div',
-                    {
-                        classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
-                        style: {width: 'calc(90%/3)'}
+    // let xhr = new XMLHttpRequest();
+    // xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/');
+    // xhr.send();
+    // xhr.onload = function () {
+    //     console.log(JSON.parse(xhr.response));
+    //     const todosData = JSON.parse(xhr.response)
+    //     const els = todosData.map(
+    //         item =>
+    //             GML.create(
+    //                 'div',
+    //                 {
+    //                     classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
+    //                     style: {width: 'calc(90%/3)'}
+    //                     },
+    //                 GML.create('div', {className: 'card-body'},
+    //                     GML.create('p', {}, item.userId),
+    //                     GML.create('p', {}, item.id),
+    //                     GML.create('p', {}, item.title),
+    //             ),
+    //         )
+    //     )
+    //     GML.elements['rowContainer'].append(...els)
+    // };
+
+    fetch('https://jsonplaceholder.typicode.com/todos/')
+        .then(response => response.json())
+        .then(json => {
+            const els = json.map(
+                item =>
+                    GML.create(
+                        'div',
+                        {
+                            classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
+                            style: {width: 'calc(90%/3)'}
                         },
-                    GML.create('div', {className: 'card-body'},
-                        GML.create('p', {}, item.userId),
-                        GML.create('p', {}, item.id),
-                        GML.create('p', {}, item.title),
-            ),
-        )
-
-
-        )
-        GML.elements['rowContainer'].append(...els)
-    };
-
-
+                        GML.create('div', {className: 'card-body'},
+                            GML.create('p', {}, item.userId),
+                            GML.create('p', {}, item.id),
+                            GML.create('p', {}, item.title),
+                        ),
+                    )
+            )
+            GML.elements['rowContainer'].append(...els)
+        })
 }
