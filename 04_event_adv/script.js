@@ -1,4 +1,3 @@
-(function (){
 function GMLConstructor (enterPoint){
     this.enterPoint = enterPoint
     this.elements = {}
@@ -63,7 +62,9 @@ GML.enterPoint.append(
                     console.log('event', event)
                     console.log('this', this)
                     if (event.key === 'Enter') {
-                        GML.enterPoint.append(GML.create('p', {}, this.value))
+                        GML.elements['rowContainer'].append(
+                            GML.create('div', {className: 'card m-2', style:{width: 'calc(90%/3)'}},
+                                GML.create('div', {className: 'card-body'},this.value)))
                         this.value =''
                     }
                 }
@@ -86,52 +87,8 @@ GML.enterPoint.append(
             }
         },
         'Добавить заметку'
-    ))
-))
+    ))),
+    GML.create('div', {name: 'rowContainer' ,className: 'row'})
+)
 
-const GML2 = new GMLConstructor(document.getElementById('root_2'))
 
-GML2.enterPoint.append(
-    GML2.create(
-        'div',
-        {
-            id: 'id_div_wer3d2232dweds',
-            className: 'input-group mb-8 mt-3',
-        },
-        GML2.create(
-            'input',
-            {
-                name: 'input',
-                attributes: {type:'text'},
-                classList: ['form-control'],
-                events: {
-                    'keypress': function (event) {
-                        console.log('event', event)
-                        console.log('this', this)
-                        if (event.key === 'Enter') {
-                            GML2.enterPoint.append(GML.create('p', {}, this.value))
-                            this.value =''
-                        }
-                    }
-                }
-            }),
-        GML2.create('div', {
-            classList: ['input-group-append']
-        }, GML2.create(
-            'button',
-            {
-                id:'button-addon2',
-                classList: ['btn', 'btn-outline-secondary'],
-                attributes: {type:'button'},
-                events: {
-                    'click': function (event){
-                        console.log(this)
-                        GML2.enterPoint.append(GML.create('p', {}, GML2.elements['input'].value))
-                        GML2.elements['input'].value =''
-                    }
-                }
-            },
-            'Добавить заметку'
-        ))
-    ))
-})()
