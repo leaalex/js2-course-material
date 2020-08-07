@@ -1,7 +1,10 @@
-const GML = {
-    enterPoint: null,
-    elements: {},
-    create: function(tag, props, ...children) {
+(function (){
+function GMLConstructor (enterPoint){
+    this.enterPoint = enterPoint
+    this.elements = {}
+}
+
+GMLConstructor.prototype.create = function(tag, props, ...children) {
     const element = document.createElement(tag)
     if (props) {
         if (props.id) element.id = props.id
@@ -37,11 +40,10 @@ const GML = {
     if (children) element.append(...children)
     return element
 }
-}
 
 
 
-GML.enterPoint = document.querySelector('.container')
+const GML = new GMLConstructor(document.getElementById('root_1'))
 
 GML.enterPoint.append(
     GML.create(
@@ -87,4 +89,49 @@ GML.enterPoint.append(
     ))
 ))
 
+const GML2 = new GMLConstructor(document.getElementById('root_2'))
 
+GML2.enterPoint.append(
+    GML2.create(
+        'div',
+        {
+            id: 'id_div_wer3d2232dweds',
+            className: 'input-group mb-8 mt-3',
+        },
+        GML2.create(
+            'input',
+            {
+                name: 'input',
+                attributes: {type:'text'},
+                classList: ['form-control'],
+                events: {
+                    'keypress': function (event) {
+                        console.log('event', event)
+                        console.log('this', this)
+                        if (event.key === 'Enter') {
+                            GML2.enterPoint.append(GML.create('p', {}, this.value))
+                            this.value =''
+                        }
+                    }
+                }
+            }),
+        GML2.create('div', {
+            classList: ['input-group-append']
+        }, GML2.create(
+            'button',
+            {
+                id:'button-addon2',
+                classList: ['btn', 'btn-outline-secondary'],
+                attributes: {type:'button'},
+                events: {
+                    'click': function (event){
+                        console.log(this)
+                        GML2.enterPoint.append(GML.create('p', {}, GML2.elements['input'].value))
+                        GML2.elements['input'].value =''
+                    }
+                }
+            },
+            'Добавить заметку'
+        ))
+    ))
+})()
