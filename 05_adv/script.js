@@ -1,13 +1,14 @@
 window.onload = function () {
-    function GMLConstructor (enterPoint){
+    function GMLConstructor(enterPoint) {
         this.enterPoint = enterPoint
         this.elements = {}
     }
-    GMLConstructor.prototype.genID =  function (name = 'id'){
+
+    GMLConstructor.prototype.genID = function (name = 'id') {
         return name + '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    GMLConstructor.prototype.create = function(tag, props, ...children) {
+    GMLConstructor.prototype.create = function (tag, props, ...children) {
         const element = document.createElement(tag)
         if (props) {
             if (props.id) element.id = props.id
@@ -18,17 +19,17 @@ window.onload = function () {
                     element.setAttribute(item, props.attributes[item])
                 })
             }
-            if (props.properties){
+            if (props.properties) {
                 Object.keys(props.properties).forEach(item => {
                     element[item] = props.properties[item]
                 })
             }
-            if (props.style){
+            if (props.style) {
                 Object.keys(props.style).forEach(item => {
                     element.style[item] = props.style[item]
                 })
             }
-            if (props.data){
+            if (props.data) {
                 Object.keys(props.data).forEach(item => {
                     element.dataset[item] = props.data[item]
                 })
@@ -45,7 +46,6 @@ window.onload = function () {
     }
 
 
-
     const GML = new GMLConstructor(document.getElementById('root_1'))
 
     GML.enterPoint.append(
@@ -59,7 +59,7 @@ window.onload = function () {
                 'input',
                 {
                     name: 'input',
-                    attributes: {type:'text'},
+                    attributes: {type: 'text'},
                     classList: ['form-control'],
                     events: {
                         'keypress': function (event) {
@@ -67,21 +67,22 @@ window.onload = function () {
                             if (event.key === 'Enter') {
                                 const id = GML.genID()
                                 GML.elements['rowContainer'].append(
-                                    GML.create('div', {name: id, className: 'card m-2', style:{width: 'calc(90%/3)'}},
+                                    GML.create('div', {name: id, className: 'card m-2', style: {width: 'calc(90%/3)'}},
                                         GML.create('div', {className: 'card-body'},
                                             GML.create('p', {}, this.value),
                                         ),
                                         GML.create('button',
                                             {
-                                                className: 'btn btn-primary' ,
-                                                events:{
-                                                    'click': function (){
+                                                className: 'btn btn-primary',
+                                                events: {
+                                                    'click': function () {
                                                         this.parentNode.classList.add('d-none')
                                                         // GML.elements[id].classList.add('d-none')
                                                     }
-                                                }}, 'Delete')
+                                                }
+                                            }, 'Delete')
                                     ))
-                                this.value =''
+                                this.value = ''
                             }
                         }
                     }
@@ -91,32 +92,47 @@ window.onload = function () {
             }, GML.create(
                 'button',
                 {
-                    id:'button-addon2',
+                    id: 'button-addon2',
                     classList: ['btn', 'btn-outline-secondary'],
-                    attributes: {type:'button'},
+                    attributes: {type: 'button'},
                     events: {
-                        'click': function (event){
+                        'click': function (event) {
                             GML.enterPoint.append(GML.create('p', {}, GML.elements['input'].value))
-                            GML.elements['input'].value =''
+                            GML.elements['input'].value = ''
                         }
                     }
                 },
                 'Добавить заметку'
             ))),
-        GML.create('div', {name: 'rowContainer' ,className: 'row'})
+        GML.create('div', {name: 'rowContainer', className: 'row'})
     )
 
-    GML.elements['input'].focus()
-}
 
-const script = document.createElement('script')
-script.src = 'script.js'
-document.head.append(script)
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/');
+    xhr.send();
+    xhr.onload = function () {
+        console.log(JSON.parse(xhr.response));
+        const todosData = JSON.parse(xhr.response)
+        const els = todosData.map(
+            item =>
+                GML.create(
+                    'div',
+                    {
+                        classList: ['card', 'm-2', 'text-white', item.completed? 'bg-primary':'bg-danger' ],
+                        style: {width: 'calc(90%/3)'}
+                        },
+                    GML.create('div', {className: 'card-body'},
+                        GML.create('p', {}, item.userId),
+                        GML.create('p', {}, item.id),
+                        GML.create('p', {}, item.title),
+            ),
+        )
 
-script.addEventListener('load',  function (){
-    console.log('скрипт загружке')
-})
 
-script.onerror = function (){
-    console.log('ошибка')
+        )
+        GML.elements['rowContainer'].append(...els)
+    };
+
+
 }
